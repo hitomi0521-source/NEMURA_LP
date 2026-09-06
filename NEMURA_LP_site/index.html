@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <!-- FVビジュアルは LCP 要素。preload 必須・loading="lazy" 禁止 -->
 <link rel="preload" as="image" href="images/fv-sp.webp"
-      imagesrcset="images/fv-sp@1x.webp 750w, images/fv-sp.webp 1500w" imagesizes="100vw">
+      imagesrcset="images/fv-sp@1x.webp 600w, images/fv-sp.webp 1200w" imagesizes="100vw">
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -27,6 +27,18 @@
 
 <!-- ================= ① FV ================= -->
 <section class="fv" data-section="01_fv" id="fv">
+  <!-- 写真は画面いっぱいに敷く。PCは横長（右にパウチ・左は文字の場所）、
+       スマホは縦長（上半分が暗く空いていて、そこにコピーが乗る） -->
+  <picture class="hero-bg">
+    <source type="image/webp" media="(min-width:1024px)" srcset="images/fv-pc.webp">
+    <source type="image/jpeg" media="(min-width:1024px)" srcset="images/fv-pc.jpg">
+    <source type="image/webp" srcset="images/fv-sp@1x.webp 600w, images/fv-sp.webp 1200w" sizes="100vw">
+    <img src="images/fv-sp.jpg" srcset="images/fv-sp@1x.jpg 600w, images/fv-sp.jpg 1200w" sizes="100vw"
+         width="1200" height="2400"
+         alt="ナイトテーブルに置かれた Night Reset のパウチ（機能性表示食品・GABA 100mg）"
+         fetchpriority="high" decoding="async">
+  </picture>
+  <div class="fv-scrim"></div>
   <div class="stars">
     <i style="left:26px;top:64px;width:2px;height:2px;opacity:.75"></i>
     <i style="left:88px;top:38px;width:3px;height:3px;opacity:.5"></i>
@@ -38,6 +50,7 @@
 
   <div class="fv-inner">
   <div class="fv-col-a">
+  <div class="fv-hero">
   <div class="topbar">
     <div class="logo">NEMURA</div>
     <div class="anniv">10th Anniversary</div>
@@ -54,20 +67,11 @@
   <h1 class="mincho">眠りは、<br>整えられる。</h1>
   <p class="lead">寝た時間は足りているのに、朝がしんどい。<br>そんな夜に、<b>ひと区切り</b>をつくる2粒を。<br>
     <span class="fact">機能性関与成分 GABA 100mg 配合</span></p>
-  </div><!-- /fv-col-a -->
-  <div class="fv-col-b">
+  <div class="scrollcue" aria-hidden="true"><span></span></div>
+  </div><!-- /fv-hero -->
 
-  <picture class="hero-vis">
-    <source type="image/webp" media="(min-width:1024px)" srcset="images/fv-pc.webp">
-    <source type="image/jpeg" media="(min-width:1024px)" srcset="images/fv-pc.jpg">
-    <source type="image/webp" srcset="images/fv-sp@1x.webp 750w, images/fv-sp.webp 1500w" sizes="100vw">
-    <img src="images/fv-sp.jpg" srcset="images/fv-sp@1x.jpg 750w, images/fv-sp.jpg 1500w" sizes="100vw"
-         width="1500" height="568"
-         alt="ナイトテーブルに置かれた Night Reset のパウチ（機能性表示食品・GABA 100mg）"
-         fetchpriority="high" decoding="async">
-    <span class="flag">初回特典つき</span>
-  </picture>
-
+  <div class="fv-offer">
+  <span class="fv-flag">初回特典つき</span>
   <div class="price">
     <div class="cap">定期便 <b>「ととのう夜コース」</b> 初回</div>
     <div class="row"><span class="was">通常 5,980円</span><span class="off">50%OFF</span></div>
@@ -84,8 +88,10 @@
       <div class="r"><span class="k">解約</span><span><b>回数の縛りなし。</b>次回発送予定日の10日前までにマイページまたは電話</span></div>
     </div>
   </div>
+  </div><!-- /fv-offer -->
 
-  </div><!-- /fv-col-b -->
+  </div><!-- /fv-col-a -->
+  <div class="fv-col-b" aria-hidden="true"></div><!-- PCで写真（パウチ）を見せるための空き -->
   </div><!-- /fv-inner -->
   <p class="jump"><a href="#plan" data-cta="jump-plan">料金プラン・定期条件を先に見る ›</a></p>
   <p class="filing">機能性表示食品／届出番号 X999　販売者：株式会社ネムラ・ラボ</p>
@@ -99,14 +105,50 @@
   <p class="sec-sub">7時間眠れている。それでもこんな1日を、<br>くり返していませんか。</p>
 
   <div class="wgrid">
-  <div class="wcard" data-anim><div class="tm"><div class="hh">6:50</div><div class="dd">MORNING</div></div>
-    <div class="tx">アラームを<b>3回止めて</b>、やっと起き上がる。「ちゃんと寝たはずなのに」と毎朝思う。</div></div>
-  <div class="wcard d1" data-anim><div class="tm"><div class="hh">13:30</div><div class="dd">AFTERNOON</div></div>
-    <div class="tx">午後の会議前、<b>コーヒーをもう一杯</b>。またこれに頼っている、と少しだけ思う。</div></div>
-  <div class="wcard d2" data-anim><div class="tm"><div class="hh">22:40</div><div class="dd">NIGHT</div></div>
-    <div class="tx">ベッドに入ってからも<b>スマホを置けない</b>。夜の自分の時間が、そこにしかないから。</div></div>
-  <div class="wcard d3" data-anim><div class="tm"><div class="hh">23:50</div><div class="dd">LIGHTS OUT</div></div>
-    <div class="tx">目を閉じても、<b>今日のやりとりが頭の中で再生される</b>。眠るまでの20分がいちばん長い。</div></div>
+  <div class="wcard" data-anim>
+    <!-- 写真は本文と同じ場面。文章で説明済みなので alt は空にして、読み上げの重複を避ける -->
+    <picture class="ph">
+      <source type="image/webp" srcset="images/day-0650.webp">
+      <img src="images/day-0650.jpg" width="400" height="400" loading="lazy" decoding="async" alt="">
+    </picture>
+    <div class="bd">
+      <div class="tm"><span class="hh">6:50</span><span class="dd">MORNING</span></div>
+      <div class="tx">アラームを<b>3回止めて</b>、やっと起き上がる。「ちゃんと寝たはずなのに」と毎朝思う。</div>
+    </div>
+  </div>
+  <div class="wcard d1" data-anim>
+    <!-- 写真は本文と同じ場面。文章で説明済みなので alt は空にして、読み上げの重複を避ける -->
+    <picture class="ph">
+      <source type="image/webp" srcset="images/day-1330.webp">
+      <img src="images/day-1330.jpg" width="400" height="400" loading="lazy" decoding="async" alt="">
+    </picture>
+    <div class="bd">
+      <div class="tm"><span class="hh">13:30</span><span class="dd">AFTERNOON</span></div>
+      <div class="tx">午後の会議前、<b>コーヒーをもう一杯</b>。またこれに頼っている、と少しだけ思う。</div>
+    </div>
+  </div>
+  <div class="wcard d2" data-anim>
+    <!-- 写真は本文と同じ場面。文章で説明済みなので alt は空にして、読み上げの重複を避ける -->
+    <picture class="ph">
+      <source type="image/webp" srcset="images/day-2240.webp">
+      <img src="images/day-2240.jpg" width="400" height="400" loading="lazy" decoding="async" alt="">
+    </picture>
+    <div class="bd">
+      <div class="tm"><span class="hh">22:40</span><span class="dd">NIGHT</span></div>
+      <div class="tx">ベッドに入ってからも<b>スマホを置けない</b>。夜の自分の時間が、そこにしかないから。</div>
+    </div>
+  </div>
+  <div class="wcard d3" data-anim>
+    <!-- 写真は本文と同じ場面。文章で説明済みなので alt は空にして、読み上げの重複を避ける -->
+    <picture class="ph">
+      <source type="image/webp" srcset="images/day-2350.webp">
+      <img src="images/day-2350.jpg" width="400" height="400" loading="lazy" decoding="async" alt="">
+    </picture>
+    <div class="bd">
+      <div class="tm"><span class="hh">23:50</span><span class="dd">LIGHTS OUT</span></div>
+      <div class="tx">目を閉じても、<b>今日のやりとりが頭の中で再生される</b>。眠るまでの20分がいちばん長い。</div>
+    </div>
+  </div>
   </div><!-- /wgrid -->
 
   <p class="turn">足りていないのは、<br><em>眠る時間</em>ではないのかもしれません。</p>
@@ -133,15 +175,27 @@
   </div>
 
   <div class="pfig" data-anim>
-    <figure>
-      <!-- ▼素材：img/product.jpg・img/product.webp を差し替えるだけ（4:3・被写体は中央） -->
-      <picture>
-        <source type="image/webp" srcset="images/product.webp">
-        <img src="images/product.jpg" width="1200" height="900" loading="lazy" decoding="async"
-             alt="Night Reset のパウチと、1日分の2粒">
-      </picture>
-      <p class="cap">60粒／約30日分。1日2粒、直径9mm・無味無臭のコーティング錠です。</p>
-    </figure>
+    <!-- パッケージと中身を並べる。「何が届いて、中に何が入っているか」を1画面で見せる -->
+    <div class="pfig2" data-slider>
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="images/product.webp">
+          <img src="images/product.jpg" width="1000" height="1000" loading="lazy" decoding="async"
+               alt="Night Reset のパウチ（チャック付きスタンドパウチ）">
+        </picture>
+        <figcaption class="cap">約120×175mm・厚さ約20mm。チャック付きで、開けたあとも封ができます。</figcaption>
+      </figure>
+      <figure>
+        <!-- 白い錠剤だけを真俯瞰で写すと薬に見えるため、手にのせて大きさが伝わるカットにする -->
+        <picture>
+          <source type="image/webp" srcset="images/tablets-hand.webp">
+          <img src="images/tablets-hand.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="就寝前、手のひらにのせた2粒とコップの水">
+        </picture>
+        <figcaption class="cap">中身は直径9mmの白いコーティング錠。無味無臭で、水またはぬるま湯で飲めます。</figcaption>
+      </figure>
+    </div>
+    <p class="cap tot">60粒／約30日分。1日2粒を、就寝の1時間前に水またはぬるま湯でお召し上がりください。</p>
   </div>
 
   <div class="filing-box">
@@ -239,17 +293,9 @@
 
   </div>
 
-  <!-- ▼ スクロール量圧縮のため非表示（2026-08-30）。戻す場合はこのコメントを解除する。
-       素材は img/howto.jpg / img/howto.webp に残してあります。CSS（.howto-vis）も残置。
-  <figure class="howto-vis">
-    <picture>
-      <source type="image/webp" srcset="images/howto.webp">
-      <img src="images/howto.jpg" width="1200" height="540" loading="lazy" decoding="async"
-           alt="就寝前、手のひらにのせた2粒とコップの水">
-    </picture>
-    <figcaption>就寝の1時間前に、水またはぬるま湯で2粒。</figcaption>
-  </figure>
-  -->
+  <!-- ▼ スクロール量圧縮のため非表示（2026-08-30）。CSS（.howto-vis）は残置。
+       同じカットは④の商品写真（img/tablets-hand）で使っています。ここを戻す場合は
+       元素材から横長（1200×540）で切り直してください。 -->
 
   <div class="stepgrid">
   <div class="step"><div class="dot">21:30</div><div><h4>入浴</h4><p>いつもどおりに。湯船でもシャワーでも。</p></div></div>
