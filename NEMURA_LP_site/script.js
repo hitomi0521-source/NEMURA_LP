@@ -209,6 +209,70 @@
     });
 
 
+    /* ============ 商品写真のスワイプ ============
+       スマホでは横スワイプ、600px以上では並べて表示。
+       点（インジケータ）は「実際にはみ出しているとき」だけ出す。
+       並んで全部見えているのに点があると、押しても何も起きないので混乱する。 */
+    (function(){
+      var track = $('[data-slider]');
+      if (!track) return;
+      var figs = [].slice.call(track.children);
+      if (figs.length < 2) return;
+
+      var dots = document.createElement('div');
+      dots.className = 'pfig-dots';
+      figs.forEach(function(_, i){
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', (i + 1) + '枚目の写真を見る');
+        b.addEventListener('click', function(){
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          track.scrollTo({left: figs[i].offsetLeft - figs[0].offsetLeft,
+                          behavior: reduce ? 'auto' : 'smooth'});
+        });
+        dots.appendChild(b);
+      });
+      track.parentNode.insertBefore(dots, track.nextSibling);
+
+      function current(){
+        var mid = track.scrollLeft + track.clientWidth / 2, best = 0, bd = Infinity;
+        figs.forEach(function(f, i){
+          var c = f.offsetLeft - figs[0].offsetLeft + f.offsetWidth / 2;
+          var d = Math.abs(c - mid);
+          if (d < bd){ bd = d; best = i; }
+        });
+        return best;
+      }
+      function sync(){
+        var scrollable = track.scrollWidth > track.clientWidth + 4;
+        dots.hidden = !scrollable;
+        // スクロールできる領域はキーボードでも操作できる必要がある
+        if (scrollable){
+          track.setAttribute('tabindex', '0');
+          track.setAttribute('role', 'group');
+          track.setAttribute('aria-label', '商品写真。横にスワイプできます');
+        } else {
+          track.removeAttribute('tabindex');
+          track.removeAttribute('role');
+          track.removeAttribute('aria-label');
+        }
+        var n = scrollable ? current() : -1;
+        figs.forEach(function(_, i){
+          if (i === n) dots.children[i].setAttribute('aria-current', 'true');
+          else dots.children[i].removeAttribute('aria-current');
+        });
+      }
+      var t = false;
+      function onScroll(){
+        if (t) return;
+        t = true;
+        window.requestAnimationFrame(function(){ t = false; sync(); });
+      }
+      track.addEventListener('scroll', onScroll, {passive: true});
+      window.addEventListener('resize', onScroll, {passive: true});
+      sync();
+    })();
+
     /* ============ スクロールに入ったブロックをフェードイン ============
        IntersectionObserver だけに任せると、勢いよくフリックしたときに
        通知を取りこぼしてブロックが透明のまま残る。表示されないのは論外なので、

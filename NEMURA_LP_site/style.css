@@ -72,16 +72,57 @@ html.p-index{scroll-behavior:auto;}
   text-align:center;font-size:16px;font-weight:700;padding:10px;border-radius:8px;
   text-decoration:none;box-shadow:0 3px 0 #C87B0C;}
 .p-index .sticky .bar:active{transform:translateY(2px);box-shadow:0 1px 0 #C87B0C;}
-.p-index .sticky .fine{font-size:11px;color:#E6E2F5;text-align:center;margin:4px 0 0;line-height:1.35;}
+/* 上の .l1 とのアキ4pxに合わせる。影の3px分を足して 4+3=7px にする */
+.p-index .sticky .fine{font-size:11px;color:#E6E2F5;text-align:center;margin:7px 0 0;line-height:1.35;}
 @media (prefers-reduced-motion:reduce){
 .p-index .sticky{transition:none;}
 }
 /* ================= ① FV ================= */
-.p-index .fv{background:
+/* ① FV：写真を画面いっぱいに敷き、その上にコピーを置く。
+   スマホは写真が1画面ぶん（100svh）＝価格とボタンはその直後。
+   PCは写真がセクション全体。右にパウチが写るので、文字は左半分に置く。 */
+.p-index .fv{position:relative;isolation:isolate;overflow:hidden;
+  min-height:100svh;
+  background:
     radial-gradient(120% 60% at 78% 12%,rgba(190,175,255,.30) 0%,rgba(190,175,255,0) 55%),
     radial-gradient(90% 50% at 12% 88%,rgba(62,154,168,.22) 0%,rgba(62,154,168,0) 60%),
     linear-gradient(168deg,#0E1730 0%,#16203C 42%,#2B2456 78%,#3A2E63 100%);
-  color:#fff;padding:12px 0 40px;overflow:hidden;}
+  color:#fff;padding:12px 0 40px;}
+/* 端末が svh を知らない場合に備えて vh でも指定しておく（古い順に書く） */
+@supports not (height:100svh){
+.p-index .fv{min-height:100vh;}
+}
+.p-index .hero-bg{position:absolute;left:0;right:0;top:0;height:100svh;z-index:-2;display:block;
+  /* 写真の下端をぼかして、下に続く背景グラデーションと継ぎ目が出ないようにする */
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 86%,transparent 100%);
+          mask-image:linear-gradient(180deg,#000 0%,#000 86%,transparent 100%);}
+@supports not (height:100svh){
+.p-index .hero-bg{height:100vh;}
+}
+.p-index .hero-bg img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
+/* 写真の上に文字を置くための減光。上ほど濃く、パウチのある下側は薄く残す */
+.p-index .fv-scrim{position:absolute;left:0;right:0;top:0;height:100svh;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(9,13,28,.88) 0%,rgba(9,13,28,.78) 22%,rgba(9,13,28,.40) 40%,
+    rgba(9,13,28,.10) 52%,rgba(9,13,28,.16) 78%,rgba(9,13,28,.34) 100%);}
+@supports not (height:100svh){
+.p-index .fv-scrim{height:100vh;}
+}
+.p-index .fv-flag{display:inline-block;margin:0 0 7px 20px;background:var(--amber);color:#16203C;
+  font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:3px;letter-spacing:.02em;
+  box-shadow:0 4px 10px rgba(0,0,0,.34);}
+/* コピーはスマホで1画面ぶんの高さを持つ。写真の暗い上半分にちょうど収まる */
+.p-index .fv-hero{min-height:calc(100svh - 52px);display:flex;flex-direction:column;}
+@supports not (height:100svh){
+.p-index .fv-hero{min-height:calc(100vh - 52px);}
+}
+.p-index .scrollcue{margin-top:auto;display:flex;justify-content:center;padding-bottom:6px;}
+.p-index .scrollcue span{display:block;width:1px;height:34px;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.72));}
+@media (prefers-reduced-motion:no-preference){
+.p-index .scrollcue span{animation:cue 2.1s ease-in-out infinite;transform-origin:top;}
+}
+@keyframes cue{0%,100%{transform:scaleY(.45);opacity:.45;}50%{transform:scaleY(1);opacity:1;}}
 .p-index .fv .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 18px 10px;}
 .p-index .fv .logo{font-size:15px;letter-spacing:.34em;font-weight:700;}
 .p-index .fv .anniv{font-size:9.5px;letter-spacing:.1em;color:#CFC6F5;border:1px solid rgba(255,255,255,.32);
@@ -96,16 +137,6 @@ html.p-index{scroll-behavior:auto;}
 .p-index .fv .lead{text-align:center;font-size:14px;line-height:1.74;color:#CFC8EC;margin:0 0 10px;padding:0 22px;}
 .p-index .fv .lead b{color:#fff;font-weight:700;}
 .p-index .fv .lead .fact{display:inline-block;margin-top:4px;font-size:12px;color:#C4BAF5;}
-.p-index .hero-vis{display:block;position:relative;height:142px;margin:0 0 2px;border-radius:12px;overflow:hidden;
-  background:#141C33;}
-.p-index .hero-vis img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 52%;}
-/* 上下だけわずかに締めて、周囲のFV背景となじませる（中央の商品には掛けない） */
-.p-index .hero-vis::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(20,28,51,.42) 0%,rgba(20,28,51,0) 26%,
-             rgba(20,28,51,0) 74%,rgba(20,28,51,.42) 100%);}
-.p-index .hero-vis .flag{position:absolute;left:12px;top:11px;z-index:2;background:var(--amber);color:#16203C;
-  font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:.02em;
-  box-shadow:0 4px 10px rgba(0,0,0,.34);}
 .p-index .price{margin:0 20px 11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
   border-radius:12px;padding:10px 14px 11px;text-align:center;}
 .p-index .price .cap{font-size:11.5px;color:#C6BDEE;margin-bottom:3px;}
@@ -122,12 +153,17 @@ html.p-index{scroll-behavior:auto;}
 .p-index .fv .filing{text-align:center;font-size:11px;color:#B0A7E2;margin:2px 20px 0;}
 /* ================= ② 悩み共感 ================= */
 .p-index .worry{background:var(--mist);padding:34px 0 38px;}
-.p-index .wcard{background:#fff;border-radius:12px;padding:12px 16px;margin:0 22px 8px;
-  border:1px solid var(--line2);box-shadow:0 2px 10px rgba(22,32,60,.045);display:flex;gap:13px;}
-.p-index .wcard .tm{flex:0 0 54px;text-align:center;padding-top:2px;}
+.p-index .wcard{background:#fff;border-radius:12px;padding:12px 14px;margin:0 22px 8px;
+  border:1px solid var(--line2);box-shadow:0 2px 10px rgba(22,32,60,.045);display:flex;gap:12px;}
+/* 左に場面写真、右に「時刻＋本文」。時刻は本文の上に横並びで置く */
+.p-index .wcard .ph{flex:0 0 80px;display:block;}
+.p-index .wcard .ph img{display:block;width:80px;height:80px;object-fit:cover;border-radius:9px;
+  background:#E9E7F1;}
+.p-index .wcard .bd{flex:1;min-width:0;}
+.p-index .wcard .tm{display:flex;align-items:baseline;gap:8px;margin-bottom:2px;}
 .p-index .wcard .tm .hh{font-size:15px;font-weight:700;color:var(--lav-t);font-variant-numeric:tabular-nums;line-height:1.2;}
-.p-index .wcard .tm .dd{font-size:9px;color:#666E88;letter-spacing:.06em;margin-top:2px;}
-.p-index .wcard .tx{flex:1;font-size:16px;line-height:1.72;color:#22283C;}
+.p-index .wcard .tm .dd{font-size:9px;color:#666E88;letter-spacing:.06em;}
+.p-index .wcard .tx{font-size:15.5px;line-height:1.7;color:#22283C;}
 .p-index .wcard .tx b{color:var(--navy);}
 .p-index .worry .turn{text-align:center;font-size:19px;line-height:1.75;color:var(--navy);font-weight:600;margin:24px 26px 0;}
 .p-index .worry .turn em{font-style:normal;background:linear-gradient(transparent 62%,#E5DEFA 62%);padding:0 2px;}
@@ -357,8 +393,12 @@ html.p-index{scroll-behavior:auto;}
 .p-index .agree .cond .r .k{flex:0 0 88px;color:var(--note);}
 .p-index .agree .cond .r .v{flex:1;color:#1E2438;font-weight:700;}
 .p-index .err{font-size:12.5px;color:var(--err);margin:7px 0 0;line-height:1.65;font-weight:700;}
-.p-index .cta5{margin:16px -17px 0;width:calc(100% + 34px);}
-.p-index .formcard .after{font-size:12px;color:#4E566E;line-height:1.7;margin:11px 0 0;text-align:left;}
+/* 以前はカードの端まで目いっぱい伸ばしていたが、左右に余白がないとボタンの輪郭が
+   カードに溶けて「押せる面」に見えない。内側に少し引いて、四辺に地を残す */
+/* <button> は width:auto だと中身の幅に縮むので、明示的に計算する */
+.p-index .cta5{margin:16px 6px 0;width:calc(100% - 12px);}
+/* ボタンを内側に引いたので、直下の注記も同じ左端に揃える */
+.p-index .formcard .after{font-size:12px;color:#4E566E;line-height:1.7;margin:11px 0 0;padding:0 6px;text-align:left;}
 .p-index .formcard .after b{color:var(--navy);}
 .p-index .goal .lineb{padding:0 22px;margin-top:14px;}
 .p-index .nextinfo{margin:14px 20px 0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
@@ -414,8 +454,6 @@ html.p-index{scroll-behavior:auto;}
 @media (max-width:359px){
 .p-index .fv h1{font-size:29px;}
 .p-index .fv .lead{font-size:13px;}
-.p-index .hero-vis{height:124px;}
-.p-index .hero-vis .flag{font-size:9px;padding:2px 7px;}
 .p-index .price .now .n{font-size:31px;}
 .p-index .badges span{font-size:9.5px;padding:2px 6px;}
 .p-index .btn{font-size:16.5px;padding:15px 10px;}
@@ -424,7 +462,6 @@ html.p-index{scroll-behavior:auto;}
 .p-index .sec-h{font-size:21px;}
 .p-index .goal .gh h2{font-size:27px;}
 .p-index .sumcard .big .now .n{font-size:38px;}
-.p-index .wcard .tm{flex:0 0 46px;}
 .p-index .ptable{--ptl:68px;}
 .p-index .ptable .rw .lb{font-size:11px;}
 }
@@ -443,17 +480,24 @@ html.p-index{scroll-behavior:auto;}
 .p-index .concept h2{font-size:28px;}
 .p-index .goal .gh h2{font-size:36px;}
 .p-index .sec-h{font-size:25px;}
-.p-index .hero-vis{height:186px;}
 .p-index .sticky > *{max-width:var(--col);margin-left:auto;margin-right:auto;}
 }
 /* ---------- PC（1024px〜） ---------- */
 @media (min-width:1024px){
 :root.p-index{ --col:600px; }
 .p-index body{font-size:17px;}
-/* FV：左にコピー、右にビジュアル＋価格＋CTA */
-.p-index .fv{padding:20px 0 48px;}
+/* FV：写真はセクション全体。パウチが右に写るので、文字はすべて左半分に置く */
+.p-index .fv{padding:0;display:flex;flex-direction:column;justify-content:center;}
+.p-index .hero-bg,.p-index .fv-scrim{height:100%;-webkit-mask-image:none;mask-image:none;}
+/* 減光も縦から横向きへ。左を暗く沈めて文字を読ませ、右のパウチには掛けない */
+.p-index .fv-scrim{background:linear-gradient(90deg,
+    rgba(9,13,28,.90) 0%,rgba(9,13,28,.84) 30%,rgba(9,13,28,.52) 48%,
+    rgba(9,13,28,.14) 63%,rgba(9,13,28,0) 76%);}
+.p-index .fv-hero{min-height:0;display:block;}
+.p-index .scrollcue{display:none;}
+.p-index .fv-flag{margin:0 0 9px;font-size:11.5px;padding:5px 11px;}
 .p-index .fv-inner{display:grid;grid-template-columns:1.02fr .98fr;align-items:center;
-    gap:48px;max-width:1080px;margin:0 auto;padding:0 40px;}
+    gap:48px;max-width:1180px;margin:0 auto;padding:44px 40px 22px;width:100%;}
 .p-index .fv-col-a,.p-index .fv-col-b{min-width:0;}
 .p-index .fv .topbar{padding:0 0 22px;}
 .p-index .fv .logo{font-size:18px;}
@@ -461,12 +505,17 @@ html.p-index{scroll-behavior:auto;}
 .p-index .fv h1{font-size:52px;text-align:left;line-height:1.34;margin-bottom:18px;}
 .p-index .fv .lead{text-align:left;padding:0;font-size:16px;}
 .p-index .fv .lead .fact{font-size:13px;}
-.p-index .hero-vis{height:300px;}
 .p-index .moon{right:6px !important;top:10px !important;width:56px !important;height:56px !important;}
-.p-index .hero-vis .flag{left:14px;top:14px;font-size:11.5px;padding:4px 10px;}
 .p-index .fv .price,.p-index .fv .cta-wrap{max-width:none;margin-left:0;margin-right:0;}
 .p-index .fv .cta-wrap{padding:0;}
-.p-index .fv .jump,.p-index .fv .filing{max-width:1080px;margin-left:auto;margin-right:auto;}
+/* .fv は縦のflex。auto margin だと中身の幅に縮んでしまうので、
+     左右いっぱいに伸ばしたうえで、本文と同じ位置まで内側に余白を取る */
+.p-index .fv .jump,.p-index .fv .filing{align-self:stretch;max-width:none;margin-left:0;margin-right:0;
+    text-align:left;padding-right:40px;
+    padding-left:max(40px,calc((100% - 1180px) / 2 + 40px));}
+.p-index .fv .jump{margin-top:-4px;}
+.p-index .fv .jump a{padding:6px 10px 6px 0;}
+.p-index .fv .filing{margin-top:0;padding-bottom:22px;}
 /* カード群をマルチカラムに */
 .p-index .wgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1000px;
     margin:0 auto;padding:0 40px;}
@@ -486,7 +535,9 @@ html.p-index{scroll-behavior:auto;}
 .p-index .formcard,.p-index .sumcard,.p-index .goal .lineb{max-width:640px;}
 .p-index .fld .two,.p-index .zip{gap:12px;}
 /* 追従バー：PCでは中央のCTAカードに */
-.p-index .sticky{padding:10px 20px 12px;}
+/* ボタンの下端には box-shadow の3pxが出る。影はレイアウト上の高さを持たないので、
+     padding を上下そろえると見た目は下だけ3px詰まる。その分を下に足して光学的に揃える */
+.p-index .sticky{padding:10px 20px 13px;}
 .p-index .sticky-in{display:flex;align-items:center;gap:20px;max-width:1000px;margin:0 auto;}
 .p-index .sticky .l1{margin:0;text-align:left;white-space:nowrap;font-size:13px;}
 .p-index .sticky .l1 b{font-size:19px;}
@@ -497,6 +548,20 @@ html.p-index{scroll-behavior:auto;}
 .p-index .foot{padding:40px 0 130px;}
 }
 /* ---------- 大画面（1280px〜）---------- */
+/* ノートPCなど画面の縦が短い環境では、FVの中身が1画面に収まらない。
+   文字と余白を一段階詰めて、CTAまでを最初の画面に入れる */
+@media (min-width:1024px) and (max-height:900px){
+.p-index .fv-inner{padding:24px 40px 12px;gap:34px;}
+.p-index .fv .topbar{padding:0 0 14px;}
+.p-index .fv .badges{margin-bottom:12px;}
+.p-index .fv h1{font-size:44px;margin-bottom:12px;}
+.p-index .fv .lead{font-size:15px;line-height:1.7;}
+.p-index .fv .price{padding:8px 14px 9px;margin-bottom:9px;}
+.p-index .fv .price .now .n{font-size:30px;}
+.p-index .fv .terms{padding:9px 13px;}
+.p-index .fv .jump a{padding:4px 10px 4px 0;}
+.p-index .fv .filing{padding-bottom:16px;}
+}
 @media (min-width:1280px){
 .p-index .fv-inner{max-width:1180px;gap:64px;}
 .p-index .rgrid{max-width:1180px;}
@@ -598,6 +663,30 @@ html.p-index{scroll-behavior:auto;}
 /* ④ 商品：パウチ＋粒 */
 .p-index .pfig{margin:14px 22px 4px;}
 .p-index .pfig figure{margin:0;}
+/* パッケージと中身の2枚。スマホは横スワイプ、600px以上は横に並べる */
+.p-index .pfig2{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-padding-left:22px;margin:0 -22px;padding:0 22px 2px;
+  scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain;}
+.p-index .pfig2::-webkit-scrollbar{width:0;height:0;}
+.p-index .pfig2 > figure{flex:0 0 84%;scroll-snap-align:start;}
+/* 最後の1枚を左端まで送り切れるだけの余りを右に作る。
+   足りないと2枚目に送っても1枚目の切れ端が残ったままになる（16% = 100% - 84%） */
+.p-index .pfig2 > figure:last-child{margin-right:16%;}
+/* 2枚の高さを揃える。揃えないとキャプションの開始位置がずれて落ち着かない */
+.p-index .pfig2 img{aspect-ratio:1/1;object-fit:cover;}
+.p-index .pfig2 .cap{margin-top:6px;}
+.p-index .pfig2:focus-visible{outline:3px solid var(--lav);outline-offset:3px;border-radius:12px;}
+/* 現在位置の点。スライドできること自体を伝える役目もある */
+.p-index .pfig-dots{display:flex;justify-content:center;gap:6px;margin-top:9px;}
+.p-index .pfig-dots button{width:32px;height:32px;padding:0;border:0;background:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.p-index .pfig-dots button::before{content:"";width:7px;height:7px;border-radius:50%;
+  background:#C7C2DC;transition:background .2s,transform .2s;}
+.p-index .pfig-dots button[aria-current="true"]::before{background:var(--lav-t);transform:scale(1.28);}
+@media (prefers-reduced-motion:reduce){
+.p-index .pfig-dots button::before{transition:none;}
+}
+.p-index .pfig .cap.tot{margin-top:10px;padding-top:9px;border-top:1px solid var(--line2);}
 .p-index .pfig img{display:block;width:100%;height:auto;border-radius:12px;background:#F1F0F6;
   box-shadow:inset 0 0 0 1px rgba(20,24,44,.07);}
 .p-index .pfig .cap{margin:8px 2px 0;font-size:11.5px;line-height:1.6;color:var(--note);}
@@ -635,6 +724,12 @@ html.p-index{scroll-behavior:auto;}
   background:linear-gradient(180deg,rgba(14,23,48,.56),rgba(14,23,48,.26) 60%,rgba(14,23,48,0));}
 @media (min-width:600px){
 .p-index .pfig,.p-index .dlv{max-width:520px;margin-left:auto;margin-right:auto;}
+/* 画面が広ければ2枚とも見えるので、スワイプではなく並べて見せる */
+.p-index .pfig2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;
+    overflow:visible;margin:0;padding:0;}
+.p-index .pfig2 > figure{flex:none;}
+.p-index .pfig2 > figure:last-child{margin-right:0;}
+.p-index .pfig-dots{display:none;}
 .p-index .gcard{display:grid;grid-template-columns:1fr 38%;align-items:stretch;}
 .p-index .gvis img{height:100%;min-height:168px;}
 .p-index .gvis::after{background:linear-gradient(90deg,rgba(27,36,64,.55),rgba(27,36,64,0) 46%);}
