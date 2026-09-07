@@ -526,11 +526,23 @@
     }
 
     /* ============ 申込みの送信 ============
-       GitHub Pages は静的配信なので、送信先を外に用意する必要がある。
-       Google Apps Script のウェブアプリURLをここに入れると、
-       スプレッドシートへの記録と自動返信メールが動く。
-       空のままなら送信をとばして完了画面へ進む（見た目の確認用）。 */
-    var ENDPOINT = 'https://script.google.com/macros/s/AKfycbwF-tx9Mf9IIVVRg-1KtrXQdOZqLiY7uP-9BTmeqMLDGKErM_8A-mZ7vNbN4DqVDTLXgg/exec';
+       このサイトは架空の商品を扱う制作課題で、誰でも開ける場所に置いてある。
+       そこから氏名・住所・電話番号を実際に外部へ送れる状態にしておくと、
+       事情を知らない訪問者が本物の情報を入力して送ってしまう余地が残る。
+       受け取ったこちらにも預かる理由がないので、公開状態では送信しない。
+
+       ENDPOINT が空 → 送信をとばして完了画面へ進む（画面遷移の確認はできる）。
+       スプレッドシートへの記録まで動かして見せたいときだけ、
+       Google Apps Script のウェブアプリURLをここに入れて、手元で開く。 */
+    var ENDPOINT = '';
+
+    /* URLを入れ忘れて公開したときの安全弁。手元（localhost / file://）でしか送らない。
+       GitHub Pages などの公開ホストでは、URLが入っていても送信しない。 */
+    function canSend(){
+      if (!ENDPOINT) return false;
+      var h = location.hostname;
+      return h === 'localhost' || h === '127.0.0.1' || h === '' || h === '[::1]';
+    }
 
     var btn = document.getElementById('confirmBtn');
     var sendErr = document.getElementById('sendErr');
@@ -545,7 +557,7 @@
       track('purchase',{value:2980+FEE[m], currency:'JPY', payment_method:m,
                         items:[{item_name:'Night Reset 定期便ととのう夜コース', quantity:1}]});
 
-      if (!ENDPOINT) { goThanks(''); return; }
+      if (!canSend()) { goThanks(''); return; }
 
       sendErr.hidden = true;
       btn.disabled = true;

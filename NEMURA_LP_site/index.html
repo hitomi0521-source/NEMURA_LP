@@ -3,22 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Night Reset｜機能性表示食品 GABA100mg 定期便 初回2,980円｜NEMURA</title>
+<title>Night Reset｜機能性表示食品 GABA 100mg 定期便 初回2,980円｜NEMURA</title>
 <meta name="description" content="機能性表示食品「Night Reset」。GABA 100mgを1日2粒に。定期便「ととのう夜コース」初回2,980円（税込・送料無料）／2回目以降4,780円／30日ごと／回数の縛りなし。届出番号 X999。">
+<!-- favicon：頭文字のNだけの角丸マーク。16pxまで縮むので要素はこれ以上足さない -->
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
 <meta name="theme-color" content="#16203C">
 <!-- 公開URLが決まったら、canonical と og:url をここに書き足します。
      例：<link rel="canonical" href="https://ユーザー名.github.io/リポジトリ名/">
      いまは実在しないドメインを指すと検索エンジンに誤った正規URLを教えてしまうため、あえて置いていません。 -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="NEMURA">
+<meta property="og:locale" content="ja_JP">
 <meta property="og:title" content="眠りは、整えられる。｜Night Reset（機能性表示食品）">
 <meta property="og:description" content="寝た時間は足りているのに、朝がしんどい。そんな夜に、ひと区切りをつくる2粒を。定期便 初回2,980円（税込・送料無料）・回数の縛りなし。">
 <meta property="og:image" content="images/ogp.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<!-- FVビジュアルは LCP 要素。preload 必須・loading="lazy" 禁止 -->
-<link rel="preload" as="image" href="images/fv-sp.webp"
+<meta name="twitter:title" content="眠りは、整えられる。｜Night Reset（機能性表示食品）">
+<meta name="twitter:description" content="寝た時間は足りているのに、朝がしんどい。そんな夜に、ひと区切りをつくる2粒を。定期便 初回2,980円（税込・送料無料）・回数の縛りなし。">
+<meta name="twitter:image" content="images/ogp.jpg">
+<!-- FVビジュアルは LCP 要素。preload 必須・loading="lazy" 禁止。
+     media を付けないと、PCでもスマホ用の縦長画像を先に取りに行ってしまう -->
+<link rel="preload" as="image" href="images/fv-sp.webp" media="(max-width:1023px)"
       imagesrcset="images/fv-sp@1x.webp 600w, images/fv-sp.webp 1200w" imagesizes="100vw">
+<link rel="preload" as="image" href="images/fv-pc.webp" media="(min-width:1024px)">
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -40,12 +51,7 @@
   </picture>
   <div class="fv-scrim"></div>
   <div class="stars">
-    <i style="left:26px;top:64px;width:2px;height:2px;opacity:.75"></i>
-    <i style="left:88px;top:38px;width:3px;height:3px;opacity:.5"></i>
-    <i style="left:150px;top:78px;width:2px;height:2px;opacity:.6"></i>
-    <i style="left:300px;top:120px;width:2px;height:2px;opacity:.45"></i>
-    <i style="left:340px;top:60px;width:3px;height:3px;opacity:.35"></i>
-    <i style="left:60px;top:150px;width:2px;height:2px;opacity:.4"></i>
+    <i></i><i></i><i></i><i></i><i></i><i></i>
   </div>
 
   <div class="fv-inner">
@@ -75,7 +81,7 @@
   <div class="price">
     <div class="cap">定期便 <b>「ととのう夜コース」</b> 初回</div>
     <div class="row"><span class="was">通常 5,980円</span><span class="off">50%OFF</span></div>
-    <div class="now"><span class="n">2,980</span>円<span style="font-size:12px">（税込）</span></div>
+    <div class="now"><span class="n">2,980</span>円<span class="tax">（税込）</span></div>
     <div class="ship">送料無料 ／ ナイトハーブティー7日分つき</div>
   </div>
 
@@ -218,7 +224,7 @@
     <div class="r"><span class="k">製造</span><span class="v">国内GMP認定工場（静岡県）</span></div>
   </div>
 
-  <div class="cta-wrap" style="margin-top:20px">
+  <div class="cta-wrap gap-l">
     <a class="btn" data-cta="product" href="#form">初回2,980円ではじめる<span class="small">＼ 初回のみでの解約も可・縛りなし ／</span></a>
     <div class="terms">
       <div class="r"><span class="k">初回</span><span><b>2,980円</b>（税込・送料無料）※初回のみの価格です</span></div>
@@ -239,7 +245,7 @@
     <div class="pill"><div class="n">1,200<small>夜</small></div><div class="l">解析基盤の<br>睡眠ログ ※1</div></div>
     <div class="pill"><div class="n">9<small>mm</small></div><div class="l">2025年改良後の<br>粒の直径</div></div>
   </div>
-  <p class="note pad" style="margin-top:11px">※1 自社調べ／2020年10月時点。自社アプリで取得した睡眠ログの解析基盤の規模であり、本品の機能性を示すものではありません。</p>
+  <p class="note pad gap-m">※1 自社調べ／2020年10月時点。自社アプリで取得した睡眠ログの解析基盤の規模であり、本品の機能性を示すものではありません。</p>
 </section>
 
 <!-- ================= ⑤ 3つの理由 ================= -->
@@ -270,9 +276,9 @@
     <span class="tag">量と、届出番号を明記。</span></div>
   </div><!-- /rgrid -->
 
-  <p class="note pad" style="margin-top:12px">※ ラフマ抽出物およびL-テアニンは機能性関与成分ではありません。</p>
+  <p class="note pad gap-m">※ ラフマ抽出物およびL-テアニンは機能性関与成分ではありません。</p>
 
-  <div class="cta-wrap" style="margin-top:20px">
+  <div class="cta-wrap gap-l">
     <a class="btn" data-cta="reasons" href="#form">初回2,980円ではじめる<span class="small">＼ 送料無料・ハーブティー7日分つき ／</span></a>
     <div class="terms">
       <div class="r"><span class="k">初回</span><span><b>2,980円</b>（税込・送料無料）※初回のみの価格です</span></div>
@@ -308,10 +314,10 @@
     <span class="h">FOR SHIFT WORKERS</span>
     生活リズムが不規則な方は、<b>ご自身の“夜”にあたる時間の前に</b>お召し上がりください。飲む時間が前後しても問題ありません。直径9mm・無味無臭の錠剤なので、ピルケースなどに数粒移して持ち歩くこともできます。
   </div>
-  <p class="note pad" style="margin-top:11px">※ 1日の摂取目安量（2粒）を守ってください。多量に摂取することにより、効果が高まるものではありません。</p>
+  <p class="note pad gap-m">※ 1日の摂取目安量（2粒）を守ってください。多量に摂取することにより、効果が高まるものではありません。</p>
 
   <!-- ⑥b 睡眠タイプ診断（§18）：飲み方セクション内に統合 -->
-  <div data-section="06b_diagnosis" style="margin-top:18px">
+  <div class="gap-l" data-section="06b_diagnosis">
   <div class="dx-card">
 
     <!-- 初期状態 -->
@@ -325,7 +331,7 @@
     <!-- 設問 -->
     <div class="dx-panel" id="dxPanel" role="group" aria-labelledby="dxLegend">
       <div class="dx-prog" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
-      <fieldset class="dx-q" style="border:0;padding:0;margin:0">
+      <fieldset class="dx-q">
         <legend id="dxLegend"><span class="qn" id="dxQn">QUESTION 1 / 3</span><span id="dxQt"></span></legend>
         <div id="dxOpts"></div>
       </fieldset>
@@ -344,7 +350,7 @@
         <ul id="dxPlan"></ul>
       </div>
       <p class="dx-note">本診断は、ご回答いただいた生活習慣の傾向をもとに<b>お召し上がりのタイミングをご提案するもの</b>です。疾病の有無や健康状態を判定・示唆するものではありません。気になる症状がある場合は医師にご相談ください。</p>
-      <div class="cta-wrap" style="padding:0">
+      <div class="cta-wrap flush">
         <a class="btn" data-cta="diagnosis" href="#form">初回2,980円ではじめる<span class="small">＼ 回数の縛りなし・初回のみでの解約も可 ／</span></a>
         <div class="terms">
           <div class="r"><span class="k">初回</span><span><b>2,980円</b>（税込・送料無料）※初回のみの価格です</span></div>
@@ -421,12 +427,12 @@
 
   <div class="story">
     <div class="h">DEVELOPMENT STORY</div>
-    <p>2016年、私たちは睡眠計測アプリ「NEMURA Sleep」からはじまりました。累計50万DL<span style="font-size:11px">※2</span>のユーザーから最も多く寄せられた声が、「寝つきよりも、<b>“頭が切り替わらない”</b>」でした。</p>
+    <p>2016年、私たちは睡眠計測アプリ「NEMURA Sleep」からはじまりました。累計50万DL<span class="supnum">※2</span>のユーザーから最も多く寄せられた声が、「寝つきよりも、<b>“頭が切り替わらない”</b>」でした。</p>
     <p>そこから、就寝前の一時的なストレスの緩和に着目して設計したのが Night Reset です。「粒が大きくて続かない」という声を受け、2025年に直径9mmへ改良しました。</p>
-    <p class="note" style="margin-top:9px">※2 自社集計／2018年12月時点。<br>開発責任者：谷口 涼／株式会社ネムラ・ラボ 研究開発部</p>
+    <p class="note gap-m">※2 自社集計／2018年12月時点。<br>開発責任者：谷口 涼／株式会社ネムラ・ラボ 研究開発部</p>
   </div>
 
-  <div class="cta-wrap" style="margin-top:20px">
+  <div class="cta-wrap gap-l">
     <a class="btn" data-cta="supervisor" href="#form">初回2,980円ではじめる<span class="small">＼ 送料無料・ハーブティー7日分つき ／</span></a>
     <div class="terms">
       <div class="r"><span class="k">初回</span><span><b>2,980円</b>（税込・送料無料）※初回のみの価格です</span></div>
@@ -522,7 +528,7 @@
     </ul>
   </div>
 
-  <div class="cta-wrap" style="margin-top:18px">
+  <div class="cta-wrap gap-l">
     <a class="btn" data-cta="plan" href="#form">初回2,980円ではじめる<span class="small">＼ 縛りなし・10日前まで解約可 ／</span></a>
     <div class="terms">
       <div class="r"><span class="k">初回</span><span><b>2,980円</b>（税込・送料無料）※初回のみの価格です</span></div>
@@ -596,6 +602,10 @@
     <p class="fh">お申込みフォーム</p>
     <p class="fs">入力は約2分です</p>
 
+    <!-- 架空サイトである以上、本物の個人情報を受け取ってしまう余地は残さない -->
+    <p class="demo-note" role="note">このサイトはWeb制作課題として作成した<b>架空のランディングページ</b>です。
+      申込みは成立せず、商品も届きません。<b>実在の氏名・住所・電話番号は入力しないでください。</b></p>
+
     <button type="button" class="apay" data-cta="amazon-pay">Amazon Payで購入<small>（住所入力なし）</small></button>
     <div class="or">または、以下に入力する</div>
 
@@ -620,16 +630,14 @@
         <input type="radio" name="pay" id="pay2"><label for="pay2">Amazon<br>Pay</label>
         <input type="radio" name="pay" id="pay3"><label for="pay3">コンビニ<br>後払い</label>
       </div>
-      <p class="note" style="margin:7px 0 0">※コンビニ後払いは手数料250円（税込）が別途かかります（与信審査あり）。</p></div>
+      <p class="note gap-s">※コンビニ後払いは手数料250円（税込）が別途かかります（与信審査あり）。</p></div>
 
     <div class="agree">
       <div class="chk">
         <input type="checkbox" id="agreeSub" required>
         <label for="agreeSub"><b>定期購入条件に同意します</b>（必須）</label>
       </div>
-      <p class="agree-links" style="margin:6px 0 0"><a href="terms.html#subscription" target="_blank" rel="noopener">定期購入条件の全文を読む</a></p>
-      <div style="display:none">
-      </div>
+      <p class="agree-links gap-s"><a href="terms.html#subscription" target="_blank" rel="noopener">定期購入条件の全文を読む</a></p>
       <div class="cond">
         <div class="r"><span class="k">初回価格</span><span class="v">2,980円（税込・送料無料）※初回のみの価格です</span></div>
         <div class="r"><span class="k">2回目以降</span><span class="v">4,780円（税込・送料無料）</span></div>
@@ -649,7 +657,7 @@
     </p>
     <p class="err" id="errPp" role="alert" aria-live="polite" hidden>▲ 個人情報の取扱い・利用規約への同意にチェックを入れてください。</p>
     <!-- ハニーポット：人には見えない。埋まっていたら機械とみなして弾く -->
-    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+    <div class="hp" aria-hidden="true">
       <label for="company">会社名（入力しないでください）</label>
       <input type="text" name="company" id="company" tabindex="-1" autocomplete="off">
     </div>
@@ -664,7 +672,8 @@
   </form>
 
   <div class="lineb" id="line">
-    <a class="btn-line" data-cta="line-final" href="#line"><svg class="lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.06.021-.135.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>いまは決めない方へ｜LINE登録で500円OFF</a>
+    <div class="btn-line is-mock"><svg class="lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.06.021-.135.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>いまは決めない方へ｜LINE登録で500円OFF</div>
+    <p class="mocknote">※ 本課題ではLINE公式アカウントを開設していないため、この導線は動作しません。本番では友だち追加URLに差し替えます。</p>
   </div>
 
 </section>
@@ -718,7 +727,8 @@
     <button type="button" class="exit-close" id="exitClose" aria-label="閉じる">閉じる</button>
     <h3 id="exitTitle">今日は決めなくて大丈夫です。</h3>
     <p id="exitDesc">LINEのお友だち登録で、<b>500円OFFクーポン</b>をお送りします。定期便「ととのう夜コース」は<b>回数の縛りなし・初回のみでの解約も可能</b>です。</p>
-    <a class="btn-line" data-cta="line-exit" href="#line"><svg class="lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.06.021-.135.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>LINE登録で500円OFFを受け取る</a>
+    <div class="btn-line is-mock"><svg class="lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.06.021-.135.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>LINE登録で500円OFFを受け取る</div>
+    <p class="mocknote">※ 本課題では動作しません。</p>
     <button type="button" class="exit-again" id="exitDismiss">このまま読み続ける</button>
   </div>
 </div>

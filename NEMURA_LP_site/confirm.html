@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>お申込み内容の確認｜Night Reset 定期便「ととのう夜コース」</title>
 <meta name="robots" content="noindex,nofollow">
+<!-- favicon：頭文字のNだけの角丸マーク。16pxまで縮むので要素はこれ以上足さない -->
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
 <meta name="theme-color" content="#16203C">
 
 <link rel="stylesheet" href="style.css">
@@ -54,7 +58,7 @@
 
       <div class="sum">
         <div class="r"><span class="k">商品代金（初回）</span><span class="v">2,980円</span></div>
-        <div class="r"><span class="k">通常価格</span><span class="v" style="color:#8A90A5;text-decoration:line-through">5,980円</span></div>
+        <div class="r"><span class="k">通常価格</span><span class="v struck">5,980円</span></div>
         <div class="r free"><span class="k">送料</span><span class="v">0円（無料）</span></div>
         <div class="r" id="feeRow"><span class="k">決済手数料</span><span class="v" id="feeVal">0円</span></div>
         <div class="total">
@@ -171,7 +175,7 @@
 <div class="sticky" role="region" aria-label="お申込み確定バー">
   <div class="in">
     <p class="l1">初回お支払総額 <b id="totalVal4">2,980円</b>（税込）</p>
-    <button type="button" class="btn" style="font-size:16px;padding:13px" data-jump="confirmBtn">この内容で申し込む</button>
+    <button type="button" class="btn btn-sm" data-jump="confirmBtn">この内容で申し込む</button>
     <p class="fine">初回のみの価格／2回目以降4,780円・30日ごと／縛りなし・10日前まで解約可</p>
   </div>
 </div>

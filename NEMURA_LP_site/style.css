@@ -24,9 +24,9 @@ html.p-index{scroll-behavior:auto;}
 .p-index :focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px;}
 .p-index .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
 .p-index body{margin:0;width:100%;background:#fff;color:var(--ink);
-  font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
   font-size:16px;line-height:1.8;letter-spacing:.01em;}
-.p-index .mincho{font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;}
+.p-index .mincho{font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","MS PMincho",serif;}
 .p-index p{margin:0 0 1em;}
 .p-index ul{margin:0 0 14px;padding-left:20px;}
 .p-index section{position:relative;}
@@ -39,14 +39,38 @@ html.p-index{scroll-behavior:auto;}
 .p-index .rule{width:34px;height:2px;background:var(--lav);margin:0 auto 15px;border-radius:2px;}
 .p-index .note{font-size:12px;line-height:1.7;color:var(--note);}
 .p-index .dis{font-size:13px;line-height:1.7;color:#4E566E;}
+/* ---------- 間隔・体裁の小クラス ----------
+   HTMLに style="" を直接書くと、あとから一括で調整できず、
+   同じ意味の余白が 18px / 20px のように少しずつずれていく。
+   意味の単位で3段階に丸めてここに集約する。 */
+.p-index .gap-s{margin-top:8px;}
+.p-index .gap-m{margin-top:12px;}
+.p-index .gap-l{margin-top:20px;}
+.p-index .tax{font-size:12px;}
+/* 価格の「（税込）」 */
+.p-index .supnum{font-size:11px;}
+/* 本文中の注記番号 ※1 など */
+/* ハニーポット。人には見えないが、読み上げ・タブ移動からも外してある */
+.p-index .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 /* ---------- CTA ---------- */
 .p-index .cta-wrap{padding:0 22px;}
+.p-index .cta-wrap.flush{padding:0;}
 .p-index .btn{display:block;width:100%;border:0;cursor:pointer;
   background:linear-gradient(180deg,#F5AE4F,#EE9A2A);color:#16203C;
   text-decoration:none;text-align:center;font-size:18px;font-weight:700;line-height:1.35;
   padding:16px 12px;border-radius:10px;font-family:inherit;
   box-shadow:0 5px 0 #C87B0C,0 10px 22px rgba(200,123,12,.26);}
 .p-index .btn .small{display:block;font-size:11.5px;font-weight:700;opacity:.84;margin-top:3px;letter-spacing:.04em;}
+/* マウスのある環境だけ。タッチ端末に効かせると、押したあと明るいまま残る */
+@media (hover:hover) and (pointer:fine){
+.p-index .btn{transition:filter .15s ease;}
+.p-index .btn:hover{filter:brightness(1.05);}
+.p-index .sticky .bar{transition:filter .15s ease;}
+.p-index .sticky .bar:hover{filter:brightness(1.05);}
+}
+@media (prefers-reduced-motion:reduce){
+.p-index .btn,.p-index .sticky .bar{transition:none;}
+}
 .p-index .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #C87B0C;}
 .p-index .terms{margin-top:9px;background:#FFF9F0;border:1px solid #F2E0C4;border-radius:7px;
   padding:9px 11px;font-size:12.5px;line-height:1.7;color:#443318;}
@@ -57,6 +81,12 @@ html.p-index{scroll-behavior:auto;}
 .p-index .line-txt{text-align:center;margin:12px 0 0;}
 .p-index .line-txt a{font-size:13.5px;color:var(--line-d);text-decoration:underline;text-underline-offset:3px;
   display:inline-block;padding:12px 8px;}
+/* 架空ブランドなのでLINE公式アカウントが存在しない。
+   押しても何も起きないリンクにするより、押せない見本として置き、理由を添える */
+.p-index .btn-line.is-mock{cursor:default;opacity:.72;}
+.p-index .mocknote{font-size:11.5px;line-height:1.7;color:var(--note);margin:7px 22px 0;text-align:center;}
+/* ⑪は暗い背景。--note（明るい面用の灰）だと沈むので、同じ面の本文色に合わせる */
+.p-index .lineb .mocknote{color:#CFC8EC;}
 .p-index .btn-line{display:block;background:#fff;border:1.5px solid var(--line-g);color:var(--line-d);
   text-decoration:none;text-align:center;font-size:14.5px;font-weight:700;
   height:72px;line-height:1.4;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px;}
@@ -127,7 +157,14 @@ html.p-index{scroll-behavior:auto;}
 .p-index .fv .logo{font-size:15px;letter-spacing:.34em;font-weight:700;}
 .p-index .fv .anniv{font-size:9.5px;letter-spacing:.1em;color:#CFC6F5;border:1px solid rgba(255,255,255,.32);
   border-radius:20px;padding:3px 10px;}
-.p-index .stars i{position:absolute;background:#fff;border-radius:50%;}
+.p-index .stars i{position:absolute;background:#fff;border-radius:50%;width:2px;height:2px;}
+/* 1つずつ位置と明るさが違う。座標をHTMLに書くとマークアップが読めなくなるのでCSSに置く */
+.p-index .stars i:nth-child(1){left:26px;top:64px;opacity:.75;}
+.p-index .stars i:nth-child(2){left:88px;top:38px;width:3px;height:3px;opacity:.5;}
+.p-index .stars i:nth-child(3){left:150px;top:78px;opacity:.6;}
+.p-index .stars i:nth-child(4){left:300px;top:120px;opacity:.45;}
+.p-index .stars i:nth-child(5){left:340px;top:60px;width:3px;height:3px;opacity:.35;}
+.p-index .stars i:nth-child(6){left:60px;top:150px;opacity:.4;}
 .p-index .badges{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;padding:0 16px;margin-bottom:11px;}
 .p-index .badges span{font-size:10px;color:#E8E3FB;border:1px solid rgba(255,255,255,.34);
   border-radius:3px;padding:3px 8px;line-height:1.5;}
@@ -349,7 +386,11 @@ html.p-index{scroll-behavior:auto;}
 .p-index .formcard{margin:0 22px;background:#fff;border-radius:14px;padding:18px 17px 16px;color:var(--ink);
   box-shadow:0 14px 34px rgba(0,0,0,.32);}
 .p-index .formcard .fh{font-size:17px;font-weight:700;color:var(--navy);text-align:center;margin:0 0 4px;}
-.p-index .formcard .fs{font-size:12px;color:var(--note);text-align:center;margin:0 0 15px;}
+.p-index .formcard .fs{font-size:12px;color:var(--note);text-align:center;margin:0 0 13px;}
+/* 課題用の架空サイトである旨。入力欄より前に、本文と同じ大きさで置く */
+.p-index .formcard .demo-note{font-size:12.5px;line-height:1.7;color:#5A4212;background:#FFF8EE;
+  border:1px solid #F0DCB6;border-radius:8px;padding:10px 12px;margin:0 0 15px;}
+.p-index .formcard .demo-note b{color:#7A5410;}
 .p-index .apay{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;
   background:#FFD814;border:1px solid #E0AC00;border-radius:8px;font-size:15px;font-weight:700;
   color:#16203C;cursor:pointer;font-family:inherit;}
@@ -574,7 +615,9 @@ html.p-index{scroll-behavior:auto;}
   position:relative;box-shadow:0 24px 60px rgba(0,0,0,.4);}
 .p-index .exit-card h3{margin:0 0 8px;font-size:19px;color:var(--navy);line-height:1.6;font-weight:700;}
 .p-index .exit-card p{margin:0 0 14px;font-size:14px;line-height:1.8;color:#3C445C;}
-.p-index .exit-close{position:absolute;right:6px;top:6px;width:44px;height:44px;border:0;background:transparent;
+/* 44px角だと「閉じる」の3文字が折り返して2行になる。高さ44pxは保ったまま横に伸ばす */
+.p-index .exit-close{position:absolute;right:6px;top:6px;min-width:44px;height:44px;padding:0 10px;
+  border:0;background:transparent;white-space:nowrap;
   color:#4E566E;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:8px;}
 .p-index .exit-close:hover{background:#F3F3F8;}
 .p-index .exit-again{display:block;width:100%;margin-top:10px;background:transparent;border:0;
@@ -603,7 +646,8 @@ html.p-index{scroll-behavior:auto;}
 .p-index .dx-prog{display:flex;gap:6px;justify-content:center;margin:0 0 14px;}
 .p-index .dx-prog i{width:26px;height:4px;border-radius:2px;background:#DDD8F2;display:block;}
 .p-index .dx-prog i.on{background:var(--lav-t);}
-.p-index .dx-q{margin:0 0 12px;}
+/* fieldset の既定の枠と余白を消す（以前はHTML側の style で打ち消していた） */
+.p-index .dx-q{margin:0;border:0;padding:0;}
 .p-index .dx-q legend{font-size:16px;font-weight:700;color:var(--navy);line-height:1.65;padding:0;margin:0 0 10px;}
 .p-index .dx-q .qn{font-size:11.5px;color:var(--lav-t);font-weight:700;letter-spacing:.08em;display:block;margin-bottom:3px;}
 .p-index .dx-opt{display:block;position:relative;}
@@ -798,7 +842,7 @@ html.p-confirm{scroll-behavior:smooth;}
 html.p-confirm{scroll-behavior:auto;}
 }
 .p-confirm body{margin:0;background:var(--mist);color:var(--ink);
-  font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
   font-size:16px;line-height:1.8;padding-bottom:150px;}
 .p-confirm :focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px;}
 .p-confirm .skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--navy);color:#fff;
@@ -899,6 +943,10 @@ html.p-confirm{scroll-behavior:auto;}
   background:linear-gradient(180deg,#F5AE4F,#EE9A2A);color:#16203C;text-align:center;
   font-size:18px;font-weight:700;line-height:1.35;padding:17px 12px;border-radius:10px;
   box-shadow:0 5px 0 #C87B0C,0 10px 22px rgba(200,123,12,.26);}
+/* 確認画面の下部にもう一度置くボタン。主CTAより一段小さく */
+.p-confirm .btn.btn-sm{font-size:16px;padding:13px;}
+/* 「通常価格」の取り消し線 */
+.p-confirm .struck{color:#8A90A5;text-decoration:line-through;}
 .p-confirm .btn .s{display:block;font-size:11.5px;font-weight:700;opacity:.84;margin-top:3px;}
 .p-confirm .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #C87B0C;}
 .p-confirm .back{display:block;text-align:center;font-size:14px;color:var(--lav-t);text-decoration:underline;
@@ -933,7 +981,7 @@ html.p-confirm{scroll-behavior:auto;}
 --amber:#F0A03A;--aqua:#3E9AA8;--line:#E4E1F0;--line2:#EEECF6;--note:#666E88;--line-g:#06C755;--line-d:#067536;}
 .p-thanks,.p-thanks *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
 .p-thanks body{margin:0;background:var(--mist);color:var(--ink);font-size:16px;line-height:1.8;
-  font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;padding-bottom:40px;}
+  font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;padding-bottom:40px;}
 .p-thanks :focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px;}
 .p-thanks .wrap{max-width:600px;margin:0 auto;padding:0 16px;}
 .p-thanks header{background:var(--navy);color:#fff;padding:14px 0;}
@@ -974,6 +1022,11 @@ html.p-confirm{scroll-behavior:auto;}
 .p-thanks .tl li:last-child{padding-bottom:0;}
 .p-thanks .tl li:last-child::after{display:none;}
 .p-thanks .tl b{color:var(--navy);display:block;}
+/* 架空ブランドなのでLINE公式アカウントが存在しない。押せない見本として置き、理由を添える */
+.p-thanks .btn-line.is-mock{cursor:default;opacity:.72;margin-top:10px;}
+.p-thanks .mocknote{font-size:11.5px;line-height:1.7;color:var(--note);margin:7px 0 0;}
+.p-thanks .lead-p{margin:0 0 12px;font-size:14px;line-height:1.8;color:#3C445C;}
+.p-thanks .bullets{margin:0;padding-left:17px;}
 .p-thanks .btn-line{display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;
   border:1.5px solid var(--line-g);color:var(--line-d);text-decoration:none;text-align:center;
   font-size:14.5px;font-weight:700;height:64px;border-radius:10px;}
@@ -1004,7 +1057,7 @@ html.p-doc{scroll-behavior:smooth;}
 html.p-doc{scroll-behavior:auto;}
 }
 .p-doc body{margin:0;background:var(--mist);color:var(--ink);font-size:16px;line-height:1.9;
-  font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;}
+  font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;}
 .p-doc :focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px;}
 .p-doc .bar{background:var(--navy);color:#fff;}
 .p-doc .bar .in{max-width:760px;margin:0 auto;padding:14px 20px;display:flex;
@@ -1053,6 +1106,7 @@ html.p-doc{scroll-behavior:auto;}
 .p-doc footer .links a{color:#C3CADD;font-size:12.5px;text-decoration:underline;
   padding:11px 0;display:inline-flex;align-items:center;min-height:44px;}
 .p-doc footer .legal{font-size:11px;line-height:1.8;color:#9AA2B8;}
+.p-doc .gap-s{margin-top:8px;}
 .p-doc footer .disclaimer{margin-top:12px;padding-top:11px;border-top:1px solid rgba(255,255,255,.14);}
 .p-doc footer .cp{text-align:center;font-size:10.5px;color:#8990A6;margin-top:14px;}
 @media (min-width:600px){
@@ -1072,8 +1126,8 @@ html.p-doc{scroll-behavior:auto;}
 --amber:#F0A03A;--aqua:#3E9AA8;--line:#E4E1F0;--note:#666E88;}
 .p-fv3,.p-fv3 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
 .p-fv3 body{margin:0;background:#EEEEF3;color:var(--ink);
-  font-family:"Noto Sans JP","Hiragino Sans",sans-serif;font-size:16px;line-height:1.8;}
-.p-fv3 .mincho{font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;}
+  font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;font-size:16px;line-height:1.8;}
+.p-fv3 .mincho{font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","MS PMincho",serif;}
 .p-fv3 .page{padding:40px 44px 56px;}
 .p-fv3 .page h1{font-size:30px;color:var(--navy);margin:0 0 6px;}
 .p-fv3 .page .sub{font-size:14px;color:var(--slate);margin:0 0 6px;}
@@ -1126,6 +1180,16 @@ html.p-doc{scroll-behavior:auto;}
 .p-fv3 .badges span.key{background:rgba(142,123,232,.32);border-color:rgba(178,163,255,.62);color:#fff;font-weight:700;}
 .p-fv3 .badges.c span.key{background:rgba(62,154,168,.34);border-color:rgba(125,205,216,.7);}
 .p-fv3 h2.hd{margin:0 0 10px;text-align:center;line-height:1.4;font-weight:600;letter-spacing:.04em;}
+/* 見出しと画像の大きさは案ごとに違う。案の性格そのものなので、案のクラス側で持つ */
+.p-fv3 .fv.a h2.hd{font-size:33px;}
+.p-fv3 .fv.b h2.hd{font-size:22px;color:#F5D9AE;}
+.p-fv3 .fv.c h2.hd{font-size:26px;}
+.p-fv3 .fv.a .vis{height:142px;}
+/* A案は写真を主役にするので高い */
+.p-fv3 .fv.b .vis,.p-fv3 .fv.c .vis{height:112px;}
+.p-fv3 .fv.c .vis img{object-position:50% 46%;}
+.p-fv3 .tax{font-size:12px;}
+.p-fv3 .gap-s{margin-top:8px;}
 .p-fv3 .lead{text-align:center;font-size:14px;line-height:1.74;color:#CFC8EC;margin:0 0 10px;padding:0 22px;}
 .p-fv3 .lead b{color:#fff;}
 .p-fv3 .fact{display:inline-block;margin-top:4px;font-size:12px;color:#C4BAF5;}
@@ -1221,7 +1285,7 @@ html.p-doc{scroll-behavior:auto;}
 .p-persona,.p-persona *{box-sizing:border-box;}
 .p-persona body{
   margin:0;
-  font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+  font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
   background:var(--mist);
   color:var(--ink);
   line-height:1.8;
@@ -1338,4 +1402,8 @@ html.p-doc{scroll-behavior:auto;}
 @media(max-width:960px){
 .p-persona table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 }
+/* 表の見出し列だけ幅を決める（本文列は残りを分け合う） */
+.p-persona .col-sec{width:170px;}
+.p-persona .col-name{width:130px;}
+.p-persona h3.first{margin-top:0;}
 .p-persona .foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--slate);}

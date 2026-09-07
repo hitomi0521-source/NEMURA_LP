@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<!-- favicon：頭文字のNだけの角丸マーク。16pxまで縮むので要素はこれ以上足さない -->
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
 <title>NEMURA「Night Reset」LP ペルソナ設計書</title>
 
 <link rel="stylesheet" href="style.css">
@@ -153,7 +157,7 @@
 
     <h3><span class="num">07</span>LP各セクション × まどかの反応 × 設計指示</h3>
     <table>
-      <tr><th style="width:170px;">LPセクション（§4）</th><th>まどかの内心</th><th>設計・コピーの指示</th></tr>
+      <tr><th class="col-sec">LPセクション（§4）</th><th>まどかの内心</th><th>設計・コピーの指示</th></tr>
       <tr><td class="k">1. ヒーロー（FV）</td><td>「またサプリの広告か」→ 3秒で判定</td><td>1画面に商品名・機能性表示食品バッジ・届出番号X999・初回2,980円・CTA。煽り演出は禁止。<b>この層には静けさが効く。</b></td></tr>
       <tr><td class="k">2. 悩み共感</td><td>「アラーム3回目、それ私」</td><td>朝の支度／13:30の眠気／寝る前の思考の反芻／休日に寝ても回復しない、の4シーン。<b>「眠れない」ではなく「寝ているのにしんどい」で書く。</b></td></tr>
       <tr><td class="k">3. 商品紹介</td><td>「で、根拠は？」</td><td>届出表示を一字一句そのまま、読めるサイズで。3つの必須注意文を同一ブロックに。誠実さがそのまま説得力になる。</td></tr>
@@ -307,7 +311,7 @@
 <h2 class="sec">3人の比較 ── どこが同じで、どこが違うか</h2>
 <div class="card">
 <table>
-  <tr><th style="width:130px;"></th><th>① 佐倉まどか（34・メイン）</th><th>② 江口達也（48・サブ①）</th><th>③ 松永ひかり（29・サブ②）</th></tr>
+  <tr><th class="col-name"></th><th>① 佐倉まどか（34・メイン）</th><th>② 江口達也（48・サブ①）</th><th>③ 松永ひかり（29・サブ②）</th></tr>
   <tr><td class="k">主な流入</td><td>Meta広告（夜22-24時・SP）</td><td>Google/Yahoo!検索（能動）</td><td>Instagram／LINE（時間帯不定）</td></tr>
   <tr><td class="k">悩みの本体</td><td>寝ているのに回復しない</td><td>日中のパフォーマンス低下</td><td>切り替えができない</td></tr>
   <tr><td class="k">判断基準1位</td><td>安全性・続けやすさ</td><td>根拠・監修・製造体制</td><td>価格・使い方の柔軟性</td></tr>
@@ -324,7 +328,7 @@
 <!-- ============================ 結論 ============================ -->
 <h2 class="sec">この3人から導かれる、LP設計の結論</h2>
 <div class="card">
-  <h3 style="margin-top:0;">① FVは「まどか」一本に絞る。3人に同時に刺そうとしない。</h3>
+  <h3 class="first">① FVは「まどか」一本に絞る。3人に同時に刺そうとしない。</h3>
   <p>SP比率85%・主要流入Meta 60%を踏まえると、<b>FVの最適解はまどかの悩み共感軸</b>です。達也とひかりはFVで取りにいかず、<b>下層セクション（エビデンス／飲み方）で拾う</b>設計にします。ブリーフの提出物④「FV案3パターン」は、そのまま <b>価格軸＝ひかり／悩み共感軸＝まどか／成分・信頼軸＝達也</b> に対応させると、A/Bテストの仮説が明確になります。</p>
 
   <h3>② 「言いにくい情報」は、この3人にとっては売り文句である。</h3>
