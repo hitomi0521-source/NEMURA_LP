@@ -40,15 +40,36 @@
 <section class="fv" data-section="01_fv" id="fv">
   <!-- 写真は画面いっぱいに敷く。PCは横長（右にパウチ・左は文字の場所）、
        スマホは縦長（上半分が暗く空いていて、そこにコピーが乗る） -->
-  <picture class="hero-bg">
-    <source type="image/webp" media="(min-width:1024px)" srcset="images/fv-pc.webp">
-    <source type="image/jpeg" media="(min-width:1024px)" srcset="images/fv-pc.jpg">
-    <source type="image/webp" srcset="images/fv-sp@1x.webp 600w, images/fv-sp.webp 1200w" sizes="100vw">
-    <img src="images/fv-sp.jpg" srcset="images/fv-sp@1x.jpg 600w, images/fv-sp.jpg 1200w" sizes="100vw"
-         width="1200" height="2400"
-         alt="ナイトテーブルに置かれた Night Reset のパウチ（機能性表示食品・GABA 100mg）"
-         fetchpriority="high" decoding="async">
-  </picture>
+  <!-- 1枚目だけ最初から読み込む。LCPはこの写真なので、2枚目に帯域を取られたくない。
+       残りは読み込み完了後に <template> から複製して足す（JSが動かなければ1枚のまま）。
+       ※ 初回特典のハーブティーも候補にしたが外した。機能性表示食品ではないものを
+          「眠りは、整えられる。」の真下に商品と同じ大きさで置くと、
+          そのお茶にも同じはたらきがあるように読めてしまうため。 -->
+  <div class="hero-bg">
+    <picture class="hs is-on">
+      <source type="image/webp" media="(min-width:1024px)" srcset="images/fv-pc.webp">
+      <source type="image/jpeg" media="(min-width:1024px)" srcset="images/fv-pc.jpg">
+      <source type="image/webp" srcset="images/fv-sp@1x.webp 600w, images/fv-sp.webp 1200w" sizes="100vw">
+      <img src="images/fv-sp.jpg" srcset="images/fv-sp@1x.jpg 600w, images/fv-sp.jpg 1200w" sizes="100vw"
+           width="1200" height="2400" alt="ナイトテーブルに置かれた Night Reset のパウチ（機能性表示食品・GABA 100mg）" fetchpriority="high" decoding="async">
+    </picture>
+  </div>
+  <template id="heroMore">
+    <picture class="hs">
+      <source type="image/webp" media="(min-width:1024px)" srcset="images/fv2-pc.webp">
+      <source type="image/jpeg" media="(min-width:1024px)" srcset="images/fv2-pc.jpg">
+      <source type="image/webp" srcset="images/fv2-sp@1x.webp 600w, images/fv2-sp.webp 1200w" sizes="100vw">
+      <img src="images/fv2-sp.jpg" srcset="images/fv2-sp@1x.jpg 600w, images/fv2-sp.jpg 1200w" sizes="100vw"
+           width="1200" height="2400" alt="" decoding="async">
+    </picture>
+  </template>
+  <div class="hero-ctrl" role="group" aria-label="ファーストビューの写真" hidden>
+    <button type="button" class="hc-dot" aria-label="1枚目の写真を見る"></button>
+    <button type="button" class="hc-dot" aria-label="2枚目の写真を見る"></button>
+    <button type="button" class="hc-play" aria-label="写真の自動切り替えを止める">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect class="p1" x="3.5" y="2.5" width="3.4" height="11" rx="1"/><rect class="p2" x="9.1" y="2.5" width="3.4" height="11" rx="1"/><path class="tri" d="M4.6 2.6 13 8l-8.4 5.4Z"/></svg>
+    </button>
+  </div>
   <div class="fv-scrim"></div>
   <div class="stars">
     <i></i><i></i><i></i><i></i><i></i><i></i>

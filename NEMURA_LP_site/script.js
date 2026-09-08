@@ -109,11 +109,76 @@
     })();
 
     /* ============ 郵便番号 → 住所（モック。実装時はAPIに差し替え） ============ */
-    $('#zipBtn').addEventListener('click', function(){
-      var z = $('#zip').value.replace(/[^0-9]/g,'');
-      if (z.length >= 7){ $('#addr1').value = '東京都品川区東五反田'; $('#addr1').focus(); }
-      else { setErr($('#zip'), '郵便番号は7桁の数字でご入力ください。'); }
-    });
+    /* ============ 郵便番号から住所を引く ============
+       以前は入力された番号にかかわらず同じ住所を入れる仮実装だった。
+       どの番号を入れても「東京都品川区東五反田」が出るので、動いていないのと同じ。
+
+       GitHub Pages は静的配信なので、住所データは外部のAPI（zipcloud）に聞く。
+       このAPIは CORS を明記していないため、まず fetch を試し、弾かれたら
+       JSONP（script タグ）に切り替える。どちらも駄目なら手入力に案内する。
+       どの経路でもフォームは止めない。 */
+    (function(){
+      var btn = $('#zipBtn'), zipEl = $('#zip'), addrEl = $('#addr1');
+      if (!btn) return;
+      var API = 'https://zipcloud.ibsnet.co.jp/api/search';
+      var LABEL = btn.textContent, busy = false;
+      var NG = '住所を取得できませんでした。お手数ですが直接ご入力ください。';
+
+      function reset(msg){
+        busy = false; btn.disabled = false; btn.textContent = LABEL;
+        if (msg) setErr(zipEl, msg);
+      }
+      function handle(json){
+        var r = json && json.results && json.results[0];
+        if (!r){
+          reset('この郵便番号の住所が見つかりませんでした。番地までご入力ください。');
+          track('zip_lookup', {result: 'notfound'});
+          return;
+        }
+        addrEl.value = (r.address1 || '') + (r.address2 || '') + (r.address3 || '');
+        clearErr(zipEl); clearErr(addrEl);
+        reset('');
+        addrEl.focus();
+        // 続きの番地をそのまま打てるよう、カーソルを末尾へ置く
+        try { addrEl.setSelectionRange(addrEl.value.length, addrEl.value.length); } catch (e) {}
+        track('zip_lookup', {result: 'ok'});
+      }
+
+      function viaJsonp(z){
+        var cb = 'nemuraZip' + Date.now();
+        var sc = document.createElement('script');
+        var timer = setTimeout(function(){ cleanup(); reset(NG); }, 7000);
+        function cleanup(){
+          clearTimeout(timer);
+          try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+          if (sc.parentNode) sc.parentNode.removeChild(sc);
+        }
+        window[cb] = function(json){ cleanup(); handle(json); };
+        sc.onerror = function(){ cleanup(); reset(NG); track('zip_lookup', {result: 'error'}); };
+        sc.src = API + '?zipcode=' + z + '&callback=' + cb;
+        document.head.appendChild(sc);
+      }
+
+      btn.addEventListener('click', function(){
+        if (busy) return;
+        var z = (zipEl.value || '').replace(/[^0-9]/g, '');
+        if (z.length !== 7){
+          setErr(zipEl, '郵便番号は7桁の数字でご入力ください。'); zipEl.focus(); return;
+        }
+        busy = true; btn.disabled = true; btn.textContent = '検索中…'; clearErr(zipEl);
+
+        if (window.fetch && window.AbortController){
+          var ac = new AbortController();
+          var t = setTimeout(function(){ ac.abort(); }, 6000);
+          fetch(API + '?zipcode=' + z, {signal: ac.signal})
+            .then(function(r){ clearTimeout(t); return r.json(); })
+            .then(handle)
+            .catch(function(){ clearTimeout(t); viaJsonp(z); });   // CORSで弾かれたらJSONPへ
+        } else {
+          viaJsonp(z);
+        }
+      });
+    })();
 
     /* ============ フォームのバリデーション ============ */
     var RULES = {
@@ -208,6 +273,71 @@
       location.href = 'confirm.html';
     });
 
+
+    /* ============ ファーストビューの写真送り ============
+       1枚目はHTMLに直接置いてあり、LCPとして先に読み込ませる。
+       2・3枚目は読み込みが終わってから <template> を複製して足す。
+       こうしないと、最初の表示に関係ない2枚が帯域を取り合う。
+
+       自動送りは6秒ごと。止める手段が必要なので（WCAG 2.2.2）一時停止ボタンを置き、
+       マウスが乗っている間・タブが裏に回っている間も止める。
+       動きを減らす設定の端末では自動送りそのものを行わず、点だけで手動送りにする。 */
+    (function(){
+      var wrap = $('.hero-bg'), tpl = $('#heroMore'), ctrl = $('.hero-ctrl');
+      if (!wrap || !tpl || !ctrl || !('content' in document.createElement('template'))) return;
+
+      function start(){
+        wrap.appendChild(tpl.content.cloneNode(true));
+        var slides = $$('.hs', wrap);
+        if (slides.length < 2) return;
+
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var dots = $$('.hc-dot', ctrl), playBtn = $('.hc-play', ctrl);
+        var i = 0, timer = null, playing = !reduce;
+
+        ctrl.hidden = false;
+        if (reduce) playBtn.hidden = true;
+        // 点の数が写真の枚数と合わないと押しても反応しない点が出る
+        dots.forEach(function(d, k){ if (k >= slides.length) d.hidden = true; });
+
+        function show(n){
+          i = (n + slides.length) % slides.length;
+          slides.forEach(function(sl, k){ sl.classList.toggle('is-on', k === i); });
+          dots.forEach(function(d, k){
+            if (k === i) d.setAttribute('aria-current', 'true');
+            else d.removeAttribute('aria-current');
+          });
+        }
+        function stopTimer(){ if (timer){ clearInterval(timer); timer = null; } }
+        function runTimer(){ stopTimer(); timer = setInterval(function(){ show(i + 1); }, 6000); }
+        function setBtn(){
+          playBtn.classList.toggle('is-paused', !playing);
+          playBtn.setAttribute('aria-label', playing ? '写真の自動切り替えを止める' : '写真を自動で切り替える');
+        }
+
+        dots.forEach(function(d, k){
+          d.addEventListener('click', function(){ show(k); playing = false; stopTimer(); setBtn(); });
+        });
+        playBtn.addEventListener('click', function(){
+          playing = !playing;
+          if (playing) runTimer(); else stopTimer();
+          setBtn();
+        });
+        document.addEventListener('visibilitychange', function(){
+          if (document.hidden) stopTimer();
+          else if (playing) runTimer();
+        });
+        var fv = wrap.parentNode;
+        fv.addEventListener('mouseenter', function(){ if (playing) stopTimer(); });
+        fv.addEventListener('mouseleave', function(){ if (playing) runTimer(); });
+
+        show(0); setBtn();
+        if (playing) runTimer();
+      }
+
+      if (document.readyState === 'complete') start();
+      else window.addEventListener('load', start);
+    })();
 
     /* ============ 商品写真のスワイプ ============
        スマホでは横スワイプ、600px以上では並べて表示。
@@ -531,10 +661,18 @@
        事情を知らない訪問者が本物の情報を入力して送ってしまう余地が残る。
        受け取ったこちらにも預かる理由がないので、公開状態では送信しない。
 
-       ENDPOINT が空 → 送信をとばして完了画面へ進む（画面遷移の確認はできる）。
-       スプレッドシートへの記録まで動かして見せたいときだけ、
-       Google Apps Script のウェブアプリURLをここに入れて、手元で開く。 */
+       ENDPOINT が空 → 送信をとばして完了画面へ進む（画面遷移の確認はできる）。 */
     var ENDPOINT = '';
+
+    /* 手元で送信まで試したいときの逃がし口。
+       ファイルにURLを書いてしまうと、戻し忘れたまま公開して履歴に残る。
+       一度それをやったので、ファイルは空のままにして、手元のブラウザにだけ覚えさせる。
+
+         localStorage.setItem('nemura_endpoint', 'https://script.google.com/macros/s/.../exec')
+
+       を開発者ツールのコンソールで1回実行すれば、その端末でだけ送信が有効になる。
+       消すときは localStorage.removeItem('nemura_endpoint') */
+    try { ENDPOINT = ENDPOINT || localStorage.getItem('nemura_endpoint') || ''; } catch (e) {}
 
     /* URLを入れ忘れて公開したときの安全弁。手元（localhost / file://）でしか送らない。
        GitHub Pages などの公開ホストでは、URLが入っていても送信しない。 */

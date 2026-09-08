@@ -57,8 +57,8 @@ html.p-index{scroll-behavior:auto;}
 .p-index .cta-wrap.flush{padding:0;}
 .p-index .btn{display:block;width:100%;border:0;cursor:pointer;
   background:linear-gradient(180deg,#F5AE4F,#EE9A2A);color:#16203C;
-  text-decoration:none;text-align:center;font-size:18px;font-weight:700;line-height:1.35;
-  padding:16px 12px;border-radius:10px;font-family:inherit;
+  text-decoration:none;text-align:center;font-size:20px;font-weight:700;line-height:1.35;
+  padding:17px 12px;border-radius:10px;font-family:inherit;
   box-shadow:0 5px 0 #C87B0C,0 10px 22px rgba(200,123,12,.26);}
 .p-index .btn .small{display:block;font-size:11.5px;font-weight:700;opacity:.84;margin-top:3px;letter-spacing:.04em;}
 /* マウスのある環境だけ。タッチ端末に効かせると、押したあと明るいまま残る */
@@ -99,7 +99,7 @@ html.p-index{scroll-behavior:auto;}
 .p-index .sticky .l1{text-align:center;font-size:11px;color:#C9C0EE;margin-bottom:4px;line-height:1.4;}
 .p-index .sticky .l1 b{font-size:15px;color:#fff;font-variant-numeric:tabular-nums;}
 .p-index .sticky .bar{display:block;background:linear-gradient(180deg,#F5AE4F,#EE9A2A);color:#16203C;
-  text-align:center;font-size:16px;font-weight:700;padding:10px;border-radius:8px;
+  text-align:center;font-size:18px;font-weight:700;padding:11px 10px;border-radius:8px;
   text-decoration:none;box-shadow:0 3px 0 #C87B0C;}
 .p-index .sticky .bar:active{transform:translateY(2px);box-shadow:0 1px 0 #C87B0C;}
 /* 上の .l1 とのアキ4pxに合わせる。影の3px分を足して 4+3=7px にする */
@@ -129,7 +129,33 @@ html.p-index{scroll-behavior:auto;}
 @supports not (height:100svh){
 .p-index .hero-bg{height:100vh;}
 }
-.p-index .hero-bg img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
+/* 3枚を重ねて置き、表示中の1枚だけ不透明にする。位置は動かさない（縦横に動くと
+   コピーの読みづらさとレイアウトのがたつきが出る） */
+.p-index .hero-bg .hs{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;}
+.p-index .hero-bg .hs.is-on{opacity:1;}
+.p-index .hero-bg .hs img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
+@media (prefers-reduced-motion:reduce){
+.p-index .hero-bg .hs{transition:none;}
+}
+/* 写真の送りボタン。自動送りは止められる必要がある（WCAG 2.2.2） */
+.p-index .hero-ctrl{position:absolute;z-index:3;left:0;right:0;top:calc(100svh - 96px);
+  display:flex;justify-content:center;align-items:center;gap:4px;}
+@supports not (height:100svh){
+.p-index .hero-ctrl{top:calc(100vh - 96px);}
+}
+.p-index .hero-ctrl[hidden]{display:none;}
+.p-index .hc-dot,.p-index .hc-play{width:34px;height:34px;padding:0;border:0;background:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;border-radius:50%;}
+.p-index .hc-dot::before{content:"";width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.45);box-shadow:0 1px 3px rgba(0,0,0,.5);transition:background .2s,transform .2s;}
+.p-index .hc-dot[aria-current="true"]::before{background:#fff;transform:scale(1.3);}
+.p-index .hc-play svg{width:13px;height:13px;fill:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6));}
+.p-index .hc-play .tri{display:none;}
+.p-index .hc-play.is-paused .p1,.p-index .hc-play.is-paused .p2{display:none;}
+.p-index .hc-play.is-paused .tri{display:block;}
+@media (prefers-reduced-motion:reduce){
+.p-index .hc-dot::before{transition:none;}
+}
 /* 写真の上に文字を置くための減光。上ほど濃く、パウチのある下側は薄く残す */
 .p-index .fv-scrim{position:absolute;left:0;right:0;top:0;height:100svh;z-index:-1;pointer-events:none;
   background:linear-gradient(180deg,
@@ -499,7 +525,7 @@ html.p-index{scroll-behavior:auto;}
 .p-index .badges span{font-size:9.5px;padding:2px 6px;}
 .p-index .btn{font-size:16.5px;padding:15px 10px;}
 .p-index .sticky .fine{font-size:10.5px;}
-.p-index .sticky .bar{font-size:15px;}
+.p-index .sticky .bar{font-size:16.5px;}
 .p-index .sec-h{font-size:21px;}
 .p-index .goal .gh h2{font-size:27px;}
 .p-index .sumcard .big .now .n{font-size:38px;}
@@ -537,6 +563,8 @@ html.p-index{scroll-behavior:auto;}
 .p-index .fv-hero{min-height:0;display:block;}
 .p-index .scrollcue{display:none;}
 .p-index .fv-flag{margin:0 0 9px;font-size:11.5px;padding:5px 11px;}
+.p-index .hero-ctrl{top:auto;bottom:20px;right:auto;justify-content:flex-start;
+    padding-left:max(34px,calc((100% - 1180px) / 2 + 34px));}
 .p-index .fv-inner{display:grid;grid-template-columns:1.02fr .98fr;align-items:center;
     gap:48px;max-width:1180px;margin:0 auto;padding:44px 40px 22px;width:100%;}
 .p-index .fv-col-a,.p-index .fv-col-b{min-width:0;}
@@ -944,7 +972,7 @@ html.p-confirm{scroll-behavior:auto;}
   font-size:18px;font-weight:700;line-height:1.35;padding:17px 12px;border-radius:10px;
   box-shadow:0 5px 0 #C87B0C,0 10px 22px rgba(200,123,12,.26);}
 /* 確認画面の下部にもう一度置くボタン。主CTAより一段小さく */
-.p-confirm .btn.btn-sm{font-size:16px;padding:13px;}
+.p-confirm .btn.btn-sm{font-size:18px;padding:14px;}
 /* 「通常価格」の取り消し線 */
 .p-confirm .struck{color:#8A90A5;text-decoration:line-through;}
 .p-confirm .btn .s{display:block;font-size:11.5px;font-weight:700;opacity:.84;margin-top:3px;}
@@ -999,6 +1027,10 @@ html.p-confirm{scroll-behavior:auto;}
 .p-thanks .hero .check svg{width:32px;height:32px;}
 .p-thanks .hero h1{margin:0 0 8px;font-size:24px;line-height:1.55;font-weight:700;}
 .p-thanks .hero p{margin:0;font-size:14px;color:#CFC8EC;padding:0 24px;line-height:1.8;}
+/* 課題用の架空ページである旨。申込内容より前に、本文と同じ大きさで置く */
+.p-thanks .demo-band{font-size:13.5px;line-height:1.85;color:#5A4212;background:#FFF8EE;
+  border:1px solid #F0DCB6;border-radius:10px;padding:12px 14px;margin:16px 0 0;}
+.p-thanks .demo-band b{color:#7A5410;}
 .p-thanks .card{background:#fff;border:1px solid var(--line);border-radius:12px;margin:16px 0;overflow:hidden;}
 .p-thanks .card h2{margin:0;font-size:15px;font-weight:700;color:var(--navy);padding:13px 16px;
   background:#F4F3F9;border-bottom:1px solid var(--line);}
